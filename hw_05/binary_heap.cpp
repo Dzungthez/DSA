@@ -1,94 +1,88 @@
-#include <bits/stdc++.h> 
-using namespace std;
+#include <bits/stdc++.h>
 
-void swapp(int &a,int &b)
-{
-    int c = a;
-    a= b;
-    b= c;
-}
-void swimUp(vector<int> &tree,int k)
-{
-    if (k!=0)
-    {
-        int t = (k-1)/2;
-        if (tree[k]>tree[t])
-        {
-            swapp(tree[k],tree[t]);
-            swimUp(tree,t);
+class BinaryHeap {
+private:
+    vector<int> heap;
+    void swap(int& a, int& b) {
+        int temp = a;
+        a = b;
+        b = temp;
+    }
+    void swimUp(int index) {
+        while (index > 0) {
+            int parent = (index - 1) / 2;
+            if (heap[index] < heap[parent]) {
+                swap(heap[index], heap[parent]);
+                index = parent;
+            } else {
+                break;
+            }
         }
     }
 
-}
-void sinkDown(vector<int> &tree,int k)
-{
-    int n = tree.size()-1;
-    int left = k*2 +1;
-    int right = k*2 +2;
-    if (left<n&&tree[k]<tree[left])
-    {
-        swapp(tree[k],tree[left]);
-        sinkDown(tree,left);
-    }
-    else if (right<n&&tree[k]<tree[right])
-    {
-        swapp(tree[k],tree[right]);
-        sinkDown(tree,right);
+public:
+    
+    void insert(int value) {
+        heap.push_back(value);
+        int index = heap.size() - 1;
+        swimUp(index);
     }
 
-}
-
-void insertNode(vector<int> &tree,int data)
-{
-    tree.push_back(data);
-    int k = tree.size()-1;
-    swimUp(tree,k);
-}
-
-void deleteNode(vector<int> &tree,int data)
-{
-    int n = tree.size();
-    int index = -1;
-    for(int i=0;i<n;i++)
-    {
-        if (tree[i]==data)
-        {
-            index = i;
-            break;
+    int deleteMin() {
+        if (heap.empty()) {
+            throw std::runtime_error("empty");
         }
-    }
-    if (index == -1)
-    {
-        return;
-    }
-    int lastDex = n-1;
-    tree[index]= tree[lastDex];
-    tree.pop_back();
-    sinkDown(tree,index);
-}
+        int minValue = heap[0];
+        int lastIndex = heap.size() - 1;
+        heap[0] = heap[lastIndex];
+        heap.pop_back();
+        int index = 0;
 
-void print(vector<int> tree)
-{
-    for (int i=0;i<tree.size();i++)
-    {
-        cout << tree[i] << " ";
-    }
-}
+        while (true) {
+            int leftChild = 2 * index + 1;
+            int rightChild = 2 * index + 2;
+            int smallest = index;
 
-int main()
-{
-    vector<int> tree;
-    insertNode(tree,2);
-    insertNode(tree,1);
-    insertNode(tree,10);
-    insertNode(tree,6);
-    insertNode(tree,3);
-    insertNode(tree,8);
-    insertNode(tree,7);
-    insertNode(tree,13);
-    insertNode(tree,20);
-    deleteNode(tree,13);
-    print(tree);
+            if (leftChild < lastIndex && heap[leftChild] < heap[smallest]) {
+                smallest = leftChild;
+            }
+
+            if (rightChild < lastIndex && heap[rightChild] < heap[smallest]) {
+                smallest = rightChild;
+            }
+
+            if (smallest != index) {
+                swap(heap[index], heap[smallest]);
+                index = smallest;
+            } else {
+                break;
+            }
+        }
+
+        return minValue;
+    }
+
+    void printAll() {
+        for (int i : heap) {
+            std::cout << i << " ";
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    BinaryHeap heap;
+
+    heap.insert(10);
+    heap.insert(5);
+    heap.insert(15);
+    heap.insert(7);
+    heap.insert(20);
+
+    heap.printAll();
+
+    int minElement = heap.deleteMin();
+    cout << minElement << endl;
+    heap.printAll();
     return 0;
-
 }
