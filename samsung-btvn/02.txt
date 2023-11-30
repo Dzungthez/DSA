@@ -1,0 +1,4 @@
+Có bao nhiêu đồ thị vô hướng khác nhau có V đỉnh và E cạnh (không có cạnh song
+song)?
+
+=> VCE

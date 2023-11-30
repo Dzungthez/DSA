@@ -1,0 +1,13 @@
+Chứng minh rằng một đồ thị là đồ thị hai mầu (bipartite) khi và chỉ khi nó không chứa
+chu trình độ dài lẻ. Đồ thị hai mầu là đồ thị mà có thể dùng hai mầu để tô mỗi đỉnh một
+mầu sao cho không có cạnh nào nối giữa hai đỉnh cùng mầu.
+
+Giải:
+
+Chứng minh chiều xuôi : Đồ thị V bipartite (màu xanh và đỏ) -> không có chu trình độ dài lẻ
+    giả sử tồn tại chu trình tại đỉnh A : A->B->C->...A. Dễ thấy không tồn tại hai đỉnh
+    liên tiếp có cùng màu trên đường đi nói trên (thỏa mãn tính chất của đò thị hai phía)
+    Vậy nếu ta coi A bắt đầu ở vị 1 -> A kết thúc ở vị trí 2k+1 => độ dài đường đi là 2k
+
+Chứng minh chiều ngược: Đồ thị V không có chu trình độ dài lẻ => là đồ thị hai phía
+    
